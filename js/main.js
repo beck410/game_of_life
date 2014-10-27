@@ -1,14 +1,15 @@
 //create initial matrix in array
-var matrix = matrixCreator(3,3)
+//var matrix = matrixCreator(10,10)
 var $table = document.querySelector("#matrix");
 
 document.addEventListener("DOMContentLoaded", function(event) {
-  conception(matrix);
+  setInterval(function(x){conception()}, 100);
 });
 
 
 //poplulate table with matrix array
 function conception (matrix) {
+  var matrix = matrixCreator(10,10)
   //clear out all state of matrix
   $table.innerHTML = "";
   //update matrix
@@ -19,8 +20,15 @@ function conception (matrix) {
     //generate columns <td>
     row.forEach(function(cell){
       var $td = document.createElement("td");
+      $td.style.height= "20px";
+      $td.style.width= "20px";
+      if(cell === 1){
+        $td.style.background="red";
+      }
+      else{
+        $td.style.background="blue"
+      }
       $tr.appendChild($td);
-      $td.innerHTML = cell
     });
   })
 }
