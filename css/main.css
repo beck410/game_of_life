@@ -1,0 +1,30 @@
+body {
+  background: #e67e22;
+}
+
+h1 {
+  padding-top: 2%;
+  text-align:center;
+  color: #2ecc71;
+  font-size: 3em;
+  font-family: Helvetica, arial;
+}
+
+table td {
+  width: 5px;
+  height: 5px;
+  padding: 1px;
+}
+
+table {
+  margin: 2% auto;
+}
+
+.alive {
+  background: #2ecc71;
+  border-radius: 90%;
+}
+
+.dead {
+  background: #e67e22;
+}
