@@ -1,22 +1,32 @@
 //set matrix
-//var matrix = [ [0,1,0],[0,0,1],[1,1,1] ]
+document.addEventListener("DOMContentLoaded", function(event){
+//var matrix = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[1,1,1,0]]
 //random matrix
-matrix = matrixCreator(50,150)
-var $table = document.querySelector("#matrix");
-var $tick = document.querySelector('input[type="submit"]')
+var matrix = matrixCreator(50,150);
+conception(matrix);
+var $tick = document.querySelector('#tick');
+var $loop = document.querySelector('#loop');
 
-document.addEventListener("DOMContentLoaded", function(event) {
-
-    setInterval(function(){
+    //setInterval(function(){
+    $tick.addEventListener("click",function(event){
+      event.preventDefault();
       matrix = calculateNextState(matrix);
       conception(matrix)
-    }, 100);
-});
+      });
+
+    $loop.addEventListener("click",function(event){
+      event.preventDefault();
+      setInterval(function(){
+      matrix = calculateNextState(matrix);
+      conception(matrix);
+      }, 500)
+    });
 
 
 //poplulate table with matrix array for each generation
 function conception (state) {
   //clear out all state of matrix
+  var $table = document.querySelector("#matrix");
   $table.innerHTML = "";
   //generate rows <tr>
   state.forEach(function(row){
@@ -36,19 +46,22 @@ function calculateNextState(currentState){
   currentState.forEach(function(currentRow, x){
     var nextRow = [];
     currentRow.forEach(function(currentCell, y){
-      var neighborCount = livingNeighborCount(currentState, x, y);
-
+      var neighborCount = livingNeighborCount(currentState, currentRow, x, y);
+      var newCell;
       if(neighborCount < 2){
       // Rule 1. Less than 2 neighbors = die of loneliness
-         currentCell = 0;
+          newCell = 0;
       } else if(neighborCount > 3){
       // Rule 3. More than 3 neighbors = death by overpopulation
-        currentCell = 0;
+        newCell = 0;
       } else if(neighborCount === 3){
       // Rule 4. Exactly 3 neighbors = birth
-        currentCell = 1;
+        newCell = 1;
+      } 
+      else {
+        newCell = currentCell;
       }
-      nextRow.push(currentCell);
+      nextRow.push(newCell);
     });
     nextState.push(nextRow);
   });
@@ -67,40 +80,40 @@ function createTR(value){
 }
 
 //find no. count for living neighbours of cell(td)
-function livingNeighborCount(currentState, x, y){
+function livingNeighborCount(currentState, currentRow, x, y){
     //add each live neighbor to counter
     var n = 0;
     //loop through each neighbour
     //x-1, y-1
-      if(cellTest(currentState, x, x-1, y-1)){
+      if(cellTest(currentState, currentRow, x-1, y-1)){
         n++
       }
     //x-1, y
-      if(cellTest(currentState, x, x-1, y)){
+      if(cellTest(currentState, currentRow, x-1, y)){
         n++
       }
     //x-1, y+1
-      if(cellTest(currentState, x, x-1, y+1)){
+      if(cellTest(currentState, currentRow, x-1, y+1)){
         n++
       }
     //x, y-1
-      if(cellTest(currentState, x, x, y-1)){
+      if(cellTest(currentState, currentRow, x, y-1)){
         n++
       }
     //x, y+1
-      if(cellTest(currentState, x, x, y+1)){
+      if(cellTest(currentState, currentRow, x, y+1)){
         n++
      }
     //x+1, y+1
-      if(cellTest(currentState, x, x+1, y-1)){
+      if(cellTest(currentState, currentRow, x+1, y-1)){
         n++
       }
     //x+1, y
-      if(cellTest(currentState, x, x+1, y)){
+      if(cellTest(currentState, currentRow, x+1, y)){
         n++
       }
     //x+1, y+1
-      if(cellTest(currentState, x, x+1, y+1)){
+      if(cellTest(currentState, currentRow, x+1, y+1)){
         n++
       }
   return n;
@@ -108,14 +121,29 @@ function livingNeighborCount(currentState, x, y){
 
 //test whether neighbour of cell is on or off grid
 function cellTest(state, row, x, y){
-  if(x >= 0 &&  x < state.length && y >= 0 && y < state[row].length){
-    if(state[x][y] === 1){
-    return true;
+  var i = x;
+  var j = y;
+
+  if(i < 0){
+    i = state.length-1;
   }
-}  else{
+  if(i > state.length-1) {
+    i = 0;
+  }
+  if(j < 0){
+    j = row.length-1
+  }
+  if(j > row.length-1){
+    j = 0; 
+  }
+
+  if(state[i][j] === 1){
+    return true;
+  } else {
     return false;
   }
-}
+} 
+     
 
 //random matrix
 function matrixCreator(row,col) {
@@ -128,3 +156,4 @@ function matrixCreator(row,col) {
   }
   return matrix;
 }
+});
