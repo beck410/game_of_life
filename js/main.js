@@ -20,13 +20,14 @@ var $loop = document.querySelector('#loop');
       matrix = calculateNextState(matrix);
       conception(matrix);
       }, 500)
+      $loop.value = "Go Faster!";
     });
 
 
 //poplulate table with matrix array for each generation
 function conception (state) {
   //clear out all state of matrix
-  var $table = document.querySelector("#matrix");
+  var $table = document.querySelector('#matrix');
   $table.innerHTML = "";
   //generate rows <tr>
   state.forEach(function(row){
@@ -37,7 +38,7 @@ function conception (state) {
       var $td = createTR(cell);
       $tr.appendChild($td);
     });
-    $table.appendChild($tr)
+    $table.appendChild($tr);
   });
 }
 
@@ -57,7 +58,7 @@ function calculateNextState(currentState){
       } else if(neighborCount === 3){
       // Rule 4. Exactly 3 neighbors = birth
         newCell = 1;
-      } 
+      }
       else {
         newCell = currentCell;
       }
@@ -134,7 +135,7 @@ function cellTest(state, row, x, y){
     j = row.length-1
   }
   if(j > row.length-1){
-    j = 0; 
+    j = 0;
   }
 
   if(state[i][j] === 1){
@@ -142,8 +143,8 @@ function cellTest(state, row, x, y){
   } else {
     return false;
   }
-} 
-     
+}
+
 
 //random matrix
 function matrixCreator(row,col) {
