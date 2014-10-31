@@ -35,7 +35,9 @@ function conception (state) {
     var $tr = document.createElement("tr");
     //generate columns <td>
     row.forEach(function(cell){
+      //run function to create tr tag
       var $td = createTR(cell);
+      //append td
       $tr.appendChild($td);
     });
     $table.appendChild($tr);
@@ -43,12 +45,19 @@ function conception (state) {
 }
 
 function calculateNextState(currentState){
+  //create empty array for new grid values
   var nextState = [];
+  //generate new rows
   currentState.forEach(function(currentRow, x){
+    //empty array for new rows
     var nextRow = [];
+    //generate new cols(cells)
     currentRow.forEach(function(currentCell, y){
-      var neighborCount = livingNeighborCount(currentState, currentRow, x, y);
+      //call function to find neighbors
+      var neighborCount = livingNeighborCount(currentState, currentRow, x, iy);
+      //var to hold cell
       var newCell;
+      //test cell for neigbor rules
       if(neighborCount < 2){
       // Rule 1. Less than 2 neighbors = die of loneliness
           newCell = 0;
@@ -58,14 +67,17 @@ function calculateNextState(currentState){
       } else if(neighborCount === 3){
       // Rule 4. Exactly 3 neighbors = birth
         newCell = 1;
-      }
+      }//cell's state is same as current 
       else {
         newCell = currentCell;
       }
+      //push cell to row
       nextRow.push(newCell);
     });
+    //push row ro grid
     nextState.push(nextRow);
   });
+  //return new grid 
   return nextState;
 }
 
