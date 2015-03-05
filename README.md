@@ -1,4 +1,6 @@
-game_of_life
-============
+#game_of_life
 
-Simple Adaptation of Conway's game of life
+##Synopsis
+Simple Adaptation of [Conway's game of life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) using JavaScript. 
+
+
